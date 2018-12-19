@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.io.File;
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 class GeografijaDAOTest {
@@ -58,7 +59,7 @@ class GeografijaDAOTest {
     void dodajGrad() {
         GeografijaDAO dao = GeografijaDAO.getInstance();
         Drzava francuska = dao.nadjiDrzavu("Francuska");
-        Grad grad = new Grad();
+        Grad grad = new Grad(id, naziv, broj_stanovnika, drzava);
         grad.setNaziv("Marseille");
         grad.setBrojStanovnika(869815);
         grad.setDrzava(francuska);
@@ -71,10 +72,10 @@ class GeografijaDAOTest {
 
     @Test
     void dodajDrzavu() {
-        Grad sarajevo = new Grad();
+        Grad sarajevo = new Grad(id, naziv, broj_stanovnika, drzava);
         sarajevo.setNaziv("Sarajevo");
         sarajevo.setBrojStanovnika(500000);
-        Drzava bih = new Drzava();
+        Drzava bih = new Drzava(id, naziv, glavni_grad);
         bih.setNaziv("Bosna i Hercegovina");
         bih.setGlavniGrad(sarajevo);
         sarajevo.setDrzava(bih);
