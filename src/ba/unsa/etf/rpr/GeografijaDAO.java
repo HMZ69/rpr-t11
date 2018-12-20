@@ -13,23 +13,21 @@ public class GeografijaDAO {
     }
 
     private void initializeTabele() throws SQLException {
-        String sql = "CREATE TABLE IF NOT EXISTS grad (\n"
+        PreparedStatement ps = conn.prepareStatement("CREATE TABLE grad (\n"
                 + "	    id int PRIMARY KEY,\n"
                 + "	    naziv text,\n"
                 + "	    broj_stanovnika int,\n"
-                + "     drzava int NULL,\n"
-                + "     FOREIGN KEY (drzava) REFERENCES drzava(id)"
-                + ");";
-        PreparedStatement ps = conn.prepareStatement(sql);
+                + "     drzava int ,\n"
+                // + "     FOREIGN KEY (drzava) REFERENCES drzava(id)"
+                + ");");
         ps.execute();
 
-        sql = "CREATE TABLE IF NOT EXISTS drzava (\n"
+        ps = conn.prepareStatement("CREATE TABLE drzava (\n"
                 + "	    id int PRIMARY KEY,\n"
                 + "	    naziv text,\n"
                 + "     glavni_grad int,\n"
                 + "     FOREIGN KEY (glavni_grad) REFERENCES grad(id)"
-                + ");";
-        ps = conn.prepareStatement(sql);
+                + ");");
         ps.execute();
     }
 
