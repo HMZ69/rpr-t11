@@ -13,24 +13,27 @@ public class GeografijaDAO {
     }
 
     private void initializeTabele() throws SQLException {
-        String sql = "CREATE TABLE IF NOT EXISTS grad (\n"
-                + "	    id int PRIMARY KEY,\n"
-                + "	    naziv text,\n"
-                + "	    broj_stanovnika int,\n"
-                + "     drzava int NULL,\n"
-                + "     FOREIGN KEY (drzava) REFERENCES drzava(id)"
-                + ");";
-        PreparedStatement ps = conn.prepareStatement(sql);
-        ps.execute();
+        try {
+            PreparedStatement ps = conn.prepareStatement("CREATE TABLE grad (\n"
+                    + "	    id int PRIMARY KEY,\n"
+                    + "	    naziv text,\n"
+                    + "	    broj_stanovnika int,\n"
+                    + "     drzava int"
+                    // + "     FOREIGN KEY (drzava) REFERENCES drzava(id)"
+                    + ");");
+            ps.execute();
 
-        sql = "CREATE TABLE IF NOT EXISTS drzava (\n"
-                + "	    id int PRIMARY KEY,\n"
-                + "	    naziv text,\n"
-                + "     glavni_grad int,\n"
-                + "     FOREIGN KEY (glavni_grad) REFERENCES grad(id)"
-                + ");";
-        ps = conn.prepareStatement(sql);
-        ps.execute();
+            ps = conn.prepareStatement("CREATE TABLE drzava (\n"
+                    + "	    id int PRIMARY KEY,\n"
+                    + "	    naziv text,\n"
+                    + "     glavni_grad int,\n"
+                    + "     FOREIGN KEY (glavni_grad) REFERENCES grad(id)"
+                    + ");");
+            ps.execute();
+        }
+        catch (Exception e) {
+            //Do nothing
+        }
     }
 
     private void insertGradove() throws SQLException {
@@ -112,7 +115,7 @@ public class GeografijaDAO {
     }
 
     public Grad glavniGrad(String drzava) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement("select * from drzava where naziv=?");
+        PreparedStatement ps = conn.prepareStatement("SELECT * FROM drzava WHERE naziv=?");
         ps.setString(1, drzava);
         ResultSet result = ps.executeQuery();
 
